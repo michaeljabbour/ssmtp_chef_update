@@ -1,38 +1,34 @@
-= Enable the ssmtp recipe
 
+= SSMTP Recipe
 This recipe deletes the content of /etc/ssmtp and symlinks /etc/ssmtp to /data/ssmtp so that mail server configs are preserved when instances are terminated.
 
-1. Ensure ssmtp recipes in cookbooks/main/recipes/default.rb are not commented out: include_recipe "ssmtp"
+= Enable the ssmtp recipe
+Ensure ssmtp recipes in cookbooks/main/recipes/default.rb are not commented out: include_recipe "ssmtp"
 
-2. Edit lines 26 through 83 of /ssmtp/recipes/default.rb to reflect the correct ssmtp settings for your application 
-	:root => 'postmaster',
-	:mailhub => '[smtp.yourdomain.com:port]',
-	:rewritedomain => '[your domain]',
-	:fromlineoverride => 'YES',
-	:usestarttls => 'YES',
-	:authuser => '[your username]',
-	:authpass => '[your password]',
-	:authmethod => 'LOGIN'
-
+= Configure ssmtp settings
+1. Edit lines 26 through 83 of /ssmtp/recipes/default.rb to reflect the correct ssmtp settings for your application 
+  :root => 'postmaster',
+  :mailhub => '[smtp.yourdomain.com:port]',
+  :rewritedomain => '[your domain]',
+  :fromlineoverride => 'YES',
+  :usestarttls => 'YES',
+  :authuser => '[your username]',
+  :authpass => '[your password]',
+  :authmethod => 'LOGIN'
 2. Upload the recipe to the correct environment:
-	ey recipes upload -e production
-	ey recipes apply -e production
-  
+  ey recipes upload -e production
+  ey recipes apply -e production
 3. Redeploy the app.
 
 
 = Verify the ssmtp config file.
-
 1. SSH into the site:
-	ey ssh
-
+  ey ssh
 2. Edit the ssmtp.conf file
-	sudo nano /etc/ssmtp/ssmtp.conf
+  sudo nano /etc/ssmtp/ssmtp.conf
 
 
 = Modify your Rails app to use sendmail
-
 1. Add the following to config/production.rb or replace any existing config line:
-	config.action_mailer.delivery_method = :sendmail
-
+  config.action_mailer.delivery_method = :sendmail
 2. Push and deploy
