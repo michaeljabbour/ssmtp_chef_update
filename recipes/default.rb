@@ -23,7 +23,7 @@ if ['solo', 'app', 'util', 'app_master'].include?(node[:instance_role])
     to '/data/ssmtp'
   end
   
-if ['development', 'test'].include?(node[:engineyard][:environment])
+if ['development', 'test'].include?(node[:environment][:name])
     template '/data/ssmtp/ssmtp.conf' do
     source 'ssmtp.conf.erb'
     owner node[:owner_name]
@@ -37,13 +37,13 @@ if ['development', 'test'].include?(node[:engineyard][:environment])
       :usestarttls => 'YES',
       :authuser => '[your username]',
       :authpass => '[your password]',
-      :authmethod => 'LOGIN'
+      :authmethodlogin => 'LOGIN'
     })
   end
 end
 
 
-if node[:engineyard][:environment] == 'staging'
+if node[:environment][:name] == 'staging'
     template '/data/ssmtp/ssmtp.conf' do
     source 'ssmtp.conf.erb'
     owner node[:owner_name]
@@ -57,13 +57,13 @@ if node[:engineyard][:environment] == 'staging'
       :usestarttls => 'YES',
       :authuser => '[your username]',
       :authpass => '[your password]',
-      :authmethod => 'LOGIN'
+      :authmethodlogin => 'LOGIN'
     })
   end
 end
 
   
-if node[:engineyard][:environment] == 'production'
+if node[:environment][:name] == 'production'
     template '/data/ssmtp/ssmtp.conf' do
     source 'ssmtp.conf.erb'
     owner node[:owner_name]
@@ -77,7 +77,7 @@ if node[:engineyard][:environment] == 'production'
       :usestarttls => 'YES',
       :authuser => '[your username]',
       :authpass => '[your password]',
-      :authmethod => 'LOGIN'
+      :authmethodlogin => 'LOGIN'
     })
   end
 end

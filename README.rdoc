@@ -14,7 +14,7 @@ Ensure ssmtp recipes in cookbooks/main/recipes/default.rb are not commented out:
   :usestarttls => 'YES',
   :authuser => '[your username]',
   :authpass => '[your password]',
-  :authmethod => 'LOGIN'
+  :authmethodlogin => 'LOGIN'
 2. Upload the recipe to the correct environment:
   ey recipes upload -e production
   ey recipes apply -e production
